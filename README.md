@@ -117,6 +117,7 @@ app.listen(3333, () => console.log('Serve is runing 3333'));
     "password": "123456",
     "database": "nlw06",
     "migrations": ["src/database/migrations/*.ts"],
+    "entities": ["src/entities/*.ts"],
     "cli": {
         "migrationsDir": "./src/database/migrations"
     }
@@ -135,6 +136,13 @@ yarn typeorm -help
 "experimentalDecorators": true,
 "emitDecoratorMetadata": true,
 ```
+
+* Ainda dentro de tsconfig.json descomentar tb a linha com o atributo strictPropertyInitialization e defini-lo como false, para que não dê erro na inicialização dos atributos dos objetos: 
+```json
+"strictPropertyInitialization": false,
+```
+
+* Para que essas configurações funcionem talvez seja necessário reiniciar o vsCode
 
 ## Adicionar a biblioteca uuid e os tipos do uuid, opcional. Para geração de IDs das tabelas dos bancos:
 ```bash
@@ -161,6 +169,30 @@ yarn typeorm migration:run
 
 ```bash
 yarn typeorm migration:revert
+```
+
+## Criando entidades com typeorm - opcional, as entidades podem ser criadas a mão por esse comando:
+
+* Para criar a entidade pela linha de comando, adicionar no package.json o atributo entitiesDir:
+
+```json
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "123456",
+    "database": "nlw06",
+    "migrations": ["src/database/migrations/*.ts"],
+    "cli": {
+        "migrationsDir": "./src/database/migrations",
+        "entitiesDir": "src/entity"
+    }
+}
+```
+
+```bash
+yarn typeorm entity:create -n Entidade
 ```
 
 ## Instalação das dependencias:
