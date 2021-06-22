@@ -99,37 +99,48 @@ app.listen(3333, () => console.log('Serve is runing 3333'));
 
 * Dentro de database criar o diretório migrations
 
-* Em package.json no objeto scripts recém criado, criar tb o atributo typeorm com a configuração para criar a migrations nesse diretório:
+* Em package.json no objeto scripts recém criado, criar tb o atributo typeorm o qual defini a CLI:
 ```json
 "scripts": {
     "dev": "ts-node-dev src/server.ts",
-    "typeorm": "ts-node-dev node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
 },
 ```
 
-* Criar um arquivo ormconfig.json na raiz e colocar a configuração, onde ficará a configuração do bd configurações das migrations e entidades:
+* Dentro do arquivo ormconfig.json criar o CLI (ferramenta para criar migrations pelo terminal, e definir em que local será criado os arquivos .ts das migrations):
 ```json
 {
-    "type": "sqlite",
-    "database": "./src/database/nlw5.sqlite",
-    "migrations": ["./src/database/migrations/**.ts"],
-    "entities": ["./src/entities/**.ts"],
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "usuario_banco",
+    "password": "senha_banco",
+    "database": "nome_banco",
     "cli": {
-        "migrationsDir": "./src/databse/migrations"
+        "migrationsDir": "./src/database/migrations"
     }
 }
 ```
 
-* Dentro de tsconfig.json:
-descomentar as linhas:
+* Para validar se a CLI do typeorm está rfuncionando executar o comando:
+```bash
+yarn typeorm -help
+```
+
+## Configuração para utilização de decorators no typescript, necessário pois o typeorm utiliza-se dos decorators
+
+* Dentro de tsconfig.json, descomentar as linhas:
 ```json
 "experimentalDecorators": true,
 "emitDecoratorMetadata": true,
 ```
 
-* Adicionar a biblioteca uuid e os tipos:
+## Adicionar a biblioteca uuid e os tipos do uuid, opcional. Para geração de IDs das tabelas dos bancos:
 ```bash
 yarn add uuid
+```
+
+```bash
 yarn add @types/uuid -D
 ```
 
