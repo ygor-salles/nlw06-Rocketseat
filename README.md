@@ -88,8 +88,9 @@ import { createConnection } from 'typeorm';
 createConnection();
 ```
 
-* Em server.ts chamar o database:
+* Em server.ts chamar o database e o reflect-metadata:
 ```ts
+import 'reflect-metadata';
 import express from 'express';
 import './database';
 const app = express();
